@@ -2,10 +2,14 @@ package snowflake
 
 import (
 	"fmt"
+	"os"
 	"strconv"
+	"strings"
 
 	snowflake "github.com/bwmarrin/snowflake"
 )
+
+var nodeId int64 = -1
 
 func init() {
 	snowflake.Epoch = 1577836800000 // 2020-01-01 00:00:00 UTC
@@ -31,12 +35,33 @@ func GenerateBase36() string {
 }
 
 func getNode() *snowflake.Node {
-	// todo: get node from config
-	node, err := snowflake.NewNode(0)
+	if nodeId < 0 {
+		nodeId = getNodeId()
+		fmt.Println("setting nodeId", nodeId)
+	}
+	node, err := snowflake.NewNode(nodeId)
 	if err != nil {
 		fmt.Println(err)
 		return nil
 	}
 
 	return node
+}
+
+// node id is a uniq number from 0 to 255
+// it is set by the env variable HOSTNAME
+// the HOSTNAME is automatically set by k8s statefulset
+func getNodeId() int64 {
+	hostName := os.Getenv("HOSTNAME")
+	if hostName == "" {
+		return 0
+	}
+
+	podIndex, _ := strings.CutPrefix(hostName, "snowflake-id-gen-")
+	intIndex, err := strconv.Atoi(podIndex)
+
+	if err != nil {
+		return 0
+	}
+	return int64(intIndex)
 }
