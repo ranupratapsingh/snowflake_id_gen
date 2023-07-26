@@ -1,0 +1,5 @@
+.dockerignore
+LICENSE
+REVISION
+build.sh
+Dockerfile
