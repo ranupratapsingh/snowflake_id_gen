@@ -8,6 +8,16 @@ This project is a ready to deploy service for generating Twitter snoflake IDs an
 
 # quick start
 
+## local quick start
+make sure you have golang installed and in PATH. just run following.
+
+    go get .
+    fo run .
+
+open https://localhost:8080/generate in browser.
+
+## docker quick start
+
 Just do `docker compose up` in the project root directory. To get a snowflake id, open https://localhost:8080/generate in browser.
 
 # Production Deployment

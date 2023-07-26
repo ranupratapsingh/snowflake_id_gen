@@ -4,8 +4,14 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/bwmarrin/snowflake"
+	snowflake "github.com/bwmarrin/snowflake"
 )
+
+func init() {
+	snowflake.Epoch = 1577836800000 // 2020-01-01 00:00:00 UTC
+	snowflake.NodeBits = 8
+	snowflake.StepBits = 14
+}
 
 func GenerateID() snowflake.ID {
 	node := getNode()
@@ -25,7 +31,8 @@ func GenerateBase36() string {
 }
 
 func getNode() *snowflake.Node {
-	node, err := snowflake.NewNode(1)
+	// todo: get node from config
+	node, err := snowflake.NewNode(0)
 	if err != nil {
 		fmt.Println(err)
 		return nil
