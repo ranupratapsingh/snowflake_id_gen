@@ -1,0 +1,16 @@
+# docker compose file, only for development
+version: '3.4'
+
+services:
+  app:
+    # image: snowflake-id-gen:latest
+    platform: linux/amd64
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.dev
+      platforms:
+        - linux/amd64
+    volumes:
+      - .:/app
+    ports:
+      - 8080:8080

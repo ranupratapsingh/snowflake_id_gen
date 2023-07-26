@@ -8,6 +8,7 @@ metadata:
     app: snowflake-id-gen
 spec:
   replicas: 5
+  serviceName: "snowflake-id-gen"
   selector:
     matchLabels:
       app: snowflake-id-gen

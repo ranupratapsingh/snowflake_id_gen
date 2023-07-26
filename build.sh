@@ -8,7 +8,7 @@ build_image() {
   git rev-parse HEAD > ./REVISION
   ver=`get_version`
   echo "Building image with version $ver"
-  docker build --platform linux/amd64 -t snowflake-id-gen:latest -f ./Dockerfile .
+  docker build --platform linux/amd64 -t snowflake-id-gen:latest -f ./docker/Dockerfile .
   docker tag snowflake-id-gen:latest snowflake-id-gen:$ver
 }
 
