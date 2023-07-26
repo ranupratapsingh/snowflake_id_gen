@@ -1,0 +1,23 @@
+# spec file for stateful set of snowflake-id-gen
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  namespace: prod
+  name: snowflake-id-gen
+  labels:
+    app: snowflake-id-gen
+spec:
+  replicas: 5
+  selector:
+    matchLabels:
+      app: snowflake-id-gen
+  template:
+    metadata:
+      labels:
+        app: snowflake-id-gen
+    spec:
+      containers:
+      - name: snowflake-id-gen
+        image: snowflake-id-gen:v0.1.1
+        ports:
+        - containerPort: 8080

@@ -1,0 +1,16 @@
+# # spec file for service of snowflake-id-gen
+apiVersion: v1
+kind: Service
+metadata:
+  name: snowflake-id-gen
+  namespace: prod
+  labels:
+    name: snowflake-id-gen
+spec:
+  type: ClusterIP
+  selector:
+    app: snowflake-id-gen
+  ports:
+  - name: http
+    port: 80
+    targetPort: 8080
