@@ -3,3 +3,5 @@ LICENSE
 REVISION
 build.sh
 Dockerfile
+tmp
+snowflake_id_k8s
