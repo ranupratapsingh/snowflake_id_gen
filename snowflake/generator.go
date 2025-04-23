@@ -9,7 +9,7 @@ import (
 	snowflake "github.com/bwmarrin/snowflake"
 )
 
-var nodeId int64 = -1
+var currentNode *snowflake.Node = nil
 
 func init() {
 	snowflake.Epoch = 1577836800000 // 2020-01-01 00:00:00 UTC
@@ -26,6 +26,7 @@ func GenerateID() snowflake.ID {
 
 func GenerateInt64() int64 {
 	id := GenerateID()
+	// fmt.Println("generated id", id)
 	return id.Int64()
 }
 
@@ -35,17 +36,19 @@ func GenerateBase36() string {
 }
 
 func getNode() *snowflake.Node {
-	if nodeId < 0 {
-		nodeId = getNodeId()
-		fmt.Println("setting nodeId", nodeId)
+	if currentNode != nil {
+		return currentNode
 	}
-	node, err := snowflake.NewNode(nodeId)
+	nodeId := getNodeId()
+	newNode, err := snowflake.NewNode(nodeId)
+	currentNode = newNode
+	fmt.Println("createing new node with Id", nodeId)
 	if err != nil {
 		fmt.Println(err)
 		return nil
 	}
 
-	return node
+	return currentNode
 }
 
 // node id is a uniq number from 0 to 255
